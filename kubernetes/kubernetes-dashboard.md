@@ -85,5 +85,5 @@ token secret untuk melakukan akses ke kubernetes. Namun ada cara yang lebih
 singkat untuk mendapatkan token dengan perintah berikut:
 
 ```
-kubectl -n kube-system describe secret $(kubectl -n kube-system get secret | awk '/^deployment-controller-token-/{print $1}') | awk '$1=="token:"{print $2}'
+$ kubectl -n kube-system describe secret $(kubectl -n kube-system get secret | awk '/^deployment-controller-token-/{print $1}') | awk '$1=="token:"{print $2}'
 ```
