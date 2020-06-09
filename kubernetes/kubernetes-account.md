@@ -13,5 +13,5 @@ kubectl create clusterrolebinding tiller --clusterrole cluster-admin --serviceac
 # Helm init with service account
 
 ```sh
-helm ini --service-account tiller
+helm init --service-account tiller
 ```
