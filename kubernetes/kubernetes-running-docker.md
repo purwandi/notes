@@ -4,6 +4,11 @@ Tidak hanya menggunakan konfigurasi yaml, kita juga bisa menjalankan docker imag
 melalui proses pembuatan konfigurasi yaml terlebih dahulu. Sama seperti konsep penggunaan docker cli kita
 bisa menjalan sebuah kontainer secara mudah
 
+## Penggunan `Run`
+
+Cara pertama menggunakan `kubectl run`. Penggunaan perintah ini digunakan untuk membuat dan menjalankan 
+sebuah docker image dalam sebuah pod. 
+
 ```
 $ kubectl run [nama pod] --image nginx:alpine
 $ kubectl run web-nginx --image nginx:alpine
@@ -28,3 +33,16 @@ interaksi maka pod yang terbuat akan terhapus secara otomatis
 ```
 $ kubectl run [nama pod] -it --rm --image nginx:alpine -- sh
 ```
+
+## Mengapus Pod
+
+Untuk pod yang sudah dibuat kita bisa melakukan penghapusan dengan menggunakan perintah `kubectl delete pod [pod name]`
+
+```
+$ kubectl delete pod web-nginx
+```
+
+## Note
+
+Tulisan yang terdapat pada tulisan ini tidak dianjurkan dalam stage production, gunakanlah konfigurasi yaml dan simpan
+dalam sebuah git repository sehingga perubahan dari konfigurasi tersebut bisa ditrack
