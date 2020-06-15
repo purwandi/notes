@@ -99,9 +99,23 @@ Cara port-forwarding di atas akan sangat sulit dilakukan apabila kita memiliki 2
 Cara lain adalah dengan menggunakan service dengan command `kubectl expose`
 
 ```sh
-$ kubectl expose deployment [deployment name] --port [container port] --type [service type]
 // type bisa berisi ClusterIP, NodePort, LoadBalancer
+$ kubectl expose deployment [deployment name] --port [container port] --type [service type]
+// single port
 $ kubectl expose deployment nginx-proxy --port 80 --type NodePort
+// multiple port
+$ kubectl expose deployment nginx-proxy --port 80,443 --type NodePort
+```
+
+Perintah di atas akan membuat service seperti berikut:
+
+```
+NAME                               READY   STATUS    RESTARTS   AGE   IP          NODE             NOMINATED NODE   READINESS GATES
+pod/nginx-proxy-5c5bf79d45-7c9fn   1/1     Running   0          12m   10.1.0.19   docker-desktop   <none>           <none>
+
+NAME                  TYPE        CLUSTER-IP     EXTERNAL-IP   PORT(S)                      AGE     SELECTOR
+service/kubernetes    ClusterIP   10.96.0.1      <none>        443/TCP                      2d18h   <none>
+service/nginx-proxy   NodePort    10.106.15.86   <none>        80:30679/TCP,443:30515/TCP   2m44s   app=nginx-proxy
 ```
 
 ## Mendapatkan Konfigurasi Yaml
