@@ -59,7 +59,7 @@ Output ini juga terdapat pada service, berikut ini adalah perintah untuk melakuk
 deployment nginx-proxy dimana deployment tersebut terdapat container yang melakukan serving di port 80 dan 443
 
 ```
-$ kubectl expose deployment nginx-proxy --port 80,443 --type NodePort -o yaml --dry-run
+$ kubectl expose deployment nginx-proxy --port 80,443 --type NodePort -o yaml --dry-run --type NodePort
 ```
 
 Perintah di atas akan menghasilkan file yaml sebagai berikut:
@@ -84,6 +84,9 @@ spec:
     targetPort: 443
   selector:
     app: nginx-proxy
+  type: NodePort
 status:
   loadBalancer: {}
 ```
+
+Edit konfigurasi dengan seperlunya lalu bisa di save :-)
