@@ -58,11 +58,25 @@ NAME                                     DESIRED   CURRENT   READY   AGE   CONTA
 replicaset.apps/nginx-proxy-5c5bf79d45   1         1         1       37s   nginx        nginx:alpine   app=nginx-proxy,pod-template-hash=5c5bf79d45
 ```
 
+## Scaling
+
+Untuk melakukan scaling pada deployment yang tadi kita lakukan kita dapat menggunakan perintah `kubectl scale`,  berikut ini
+contoh penggunaan scaling 
+
+```
+$ kubectl scale [nama deployment] --replicas [jumlah replica]
+// scale up
+$ kubectl scale deployment.apps/nginx-proxy --replicas 10
+// scale down
+$ kubectl scale deployment.apps/nginx-proxy --replicas 1
+```
+
+
 ## Mengakses Pod Service
 
 Ada beberapa cara untuk mengakses port service
 
-**kubectl port-forward**
+### kubectl port-forward
 
 Kita tahu bahwa nginx docker akan berjalan di antar port 80 atau 444, untuk mengakses service tersebut kita bisa menggunakan
 port-forward. Perintah ini akan melakukan forwarding locar port ke sebuah pod. 
@@ -77,7 +91,25 @@ $ kubectl port-forward [nama pod] [port local]:[port pod] [port local]:[port pod
 $ kubectl port-forward nginx-proxy-5c5bf79d45-7p2b4 8080:80 8081:443
 ```
 
-Sekarang coba di cek di localhost browser anda, maka kita sudah mendapatkan akses p
+Sekarang coba di cek di http://localhost:80 browser anda, maka kita sudah mendapatkan akses p
+
+### kubectl expose 
+
+Cara port-forwarding di atas akan sangat sulit dilakukan apabila kita memiliki 2 atau lebih pod yang akan akan kita expose.
+Cara lain adalah dengan menggunakan service dengan command `kubectl expose`
+
+```sh
+$ kubectl expose deployment [deployment name] --port [container port] --type [service type]
+// type bisa berisi ClusterIP, NodePort, LoadBalancer
+$ kubectl expose deployment nginx-proxy --port 80 --type NodePort
+```
+
+## Mendapatkan Konfigurasi Yaml
+
+```
+$ kubectl get deployment ngix-proxy -o yaml
+$ kubectl get service ngix-proxy -o yaml
+```
 
 ## Mengapus Pod
 
@@ -86,6 +118,20 @@ Untuk pod yang sudah dibuat kita bisa melakukan penghapusan dengan menggunakan p
 ```
 $ kubectl delete pod web-nginx
 $ kubectl delete pod/web-nginx
+```
+
+## Menghapus Deployment
+
+```
+$ kubectl delete deployment nginx-proxy
+$ kubectl delete deployment.apps/nginx-proxy
+```
+
+## Menghapus Service
+
+```
+$ kubectl delete service nginx-proxy
+$ kubectl delete service/nginx-proxy
 ```
 
 ## Note
