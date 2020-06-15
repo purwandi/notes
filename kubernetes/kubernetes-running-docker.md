@@ -58,6 +58,27 @@ NAME                                     DESIRED   CURRENT   READY   AGE   CONTA
 replicaset.apps/nginx-proxy-5c5bf79d45   1         1         1       37s   nginx        nginx:alpine   app=nginx-proxy,pod-template-hash=5c5bf79d45
 ```
 
+## Mengakses Pod Service
+
+Ada beberapa cara untuk mengakses port service
+
+**kubectl port-forward**
+
+Kita tahu bahwa nginx docker akan berjalan di antar port 80 atau 444, untuk mengakses service tersebut kita bisa menggunakan
+port-forward. Perintah ini akan melakukan forwarding locar port ke sebuah pod. 
+
+```sh
+// single port forward
+$ kubectl port-forward [nama pod] [port local]:[port pod]
+$ kubectl port-forward nginx-proxy-5c5bf79d45-7p2b4 8080:80
+
+// multiple port forward
+$ kubectl port-forward [nama pod] [port local]:[port pod] [port local]:[port pod]
+$ kubectl port-forward nginx-proxy-5c5bf79d45-7p2b4 8080:80 8081:443
+```
+
+Sekarang coba di cek di localhost browser anda, maka kita sudah mendapatkan akses p
+
 ## Mengapus Pod
 
 Untuk pod yang sudah dibuat kita bisa melakukan penghapusan dengan menggunakan perintah `kubectl delete pod [pod name]`
